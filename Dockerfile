@@ -7,7 +7,7 @@ COPY root/. /
 RUN apk update && apk upgrade && \
 
     # Info file about build:
-    printf "Build of kjetils/docker-alpine-apache-perl-fcgi, date: %s\n"  `date -u +"%Y-%m-%dT%H:%M:%SZ"` >> /etc/BUILD && \
+    printf "Build of kjetils/alpine-apache-perl-fcgi, date: %s\n"  `date -u +"%Y-%m-%dT%H:%M:%SZ"` >> /etc/BUILD && \
 
     apk add apache2 libxml2-dev apache2-utils apache-mod-fcgid perl perl-fcgi && \
     mkdir /var/run/mod_fcgid/ && chown -R apache.www-data /var/run/mod_fcgid  && \
