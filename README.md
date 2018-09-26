@@ -4,7 +4,8 @@ This is a micro docker container ![](https://images.microbadger.com/badges/image
 
 The image is built on [nimmis/alpine-micro](https://hub.docker.com/r/nimmis/alpine-micro/)
 ![](https://images.microbadger.com/badges/image/nimmis/alpine-micro.svg),
-but it is heavily based on (basically a modified copy of) [nimmis/alpine-apache].
+but it is heavily based on (basically a modified copy of) [nimmis/alpine-apache](https://hub.docker.com/r/nimmis/alpine-apache/)
+![](https://images.microbadger.com/badges/image/nimmis/alpine-apache.svg),
 
 Visit <https://hub.docker.com/r/nimmis/alpine-micro/>
 and <https://hub.docker.com/r/nimmis/alpine-apache/>
@@ -14,17 +15,17 @@ for more information.
 
 Examples of starting the container:
 
-	docker run -d --name fcgi kjetils/alpine-apache-perl-fcgi
+        docker run -d --name fcgi kjetils/alpine-apache-perl-fcgi
         docker run -d kjetils/alpine-apache-perl-fcgi
-	mkdir /web
+        mkdir /web
         docker run -d -p 80:80 -p 443:443 -v /web:/web --name fcgi kjetils/alpine-apache-perl-fcgi
 
 The latter will publish the containers ports 80 (http) and 443 (https) to the host
-so that when port 80 (or 443) is contacted from outside, it is redirected to apache2
+so that when port 80 (or 443) is contacted from the world, it is redirected to apache2
 inside the container.
 
-	docker exec -ti fcgi ps        #to view the processes, httpd and others
-	docker exec -ti fcgi /bin/sh   #to run commands interactively
+        docker exec -ti fcgi ps        #to view the processes in the container, httpd and others
+        docker exec -ti fcgi /bin/sh   #to run commands interactively in the container
 
 #### Static web folder
 
@@ -42,7 +43,7 @@ The images exposes a volume at /web. The structure is
 To use this start the container with
 
         mkdir -p /path/to/web
-	docker run -d --name fcgi -p 80:80 -p 443:443 -v /path/to/web:/web kjetils/alpine-apache-perl-fcgi
+        docker run -d --name fcgi -p 80:80 -p 443:443 -v /path/to/web:/web kjetils/alpine-apache-perl-fcgi
 
 #### Successsful setup
 

@@ -29,15 +29,16 @@ fi
 
 if [ ! -d /web/cgi-bin ]; then
   mkdir /web/cgi-bin
-  cp -p /etc/apache2/cgi-bin/test.pl /web/cgi-bin/
   chown -R apache.www-data /web/cgi-bin
 fi
 
 if [ ! -d /web/fcgi-bin ]; then
   mkdir /web/fcgi-bin
-  cp -p /etc/apache2/fcgi-bin/test.pl /web/fcgi-bin/
   chown -R apache.www-data /web/fcgi-bin
 fi
+
+cp -pu /etc/apache2/cgi-bin/test.pl /web/cgi-bin/
+cp -pu /etc/apache2/fcgi-bin/test.pl /web/fcgi-bin/
 
 if [ ! -d /web/internal ]; then
   mkdir /web/internal
