@@ -19,14 +19,19 @@ Visit
 
 Example, starting the container:
 
-	#rm -rf /web   #to start anew
-	mkdir /web
-	docker run -d -p 80:80 -p 443:443 -v /web:/web --name fcgi \
-	       kjetils/alpine-apache-perl-fcgi
+    #rm -rf /web; mkdir /web     #to start anew
+    docker run -d -p 80:80 -p 443:443 -v /web:/web --name fcgi kjetils/alpine-apache-perl-fcgi
 
 This will publish the containers ports 80 (http) and 443 (https) to
 the host so that when port 80 (or 443) is contacted from the world
 outside, it is redirected to apache2 inside the container.
+
+The /web folder can be empty at start. The first time you run the
+container it will be populated with files and folders from the
+container.
+
+These files inside /web can be changed (the container will not
+overwrite them) and new files and folders can be added for your own app.
 
 	docker exec -ti fcgi ps        #view processes, httpd and others
 	docker exec -ti fcgi /bin/sh   #run commands
@@ -53,8 +58,16 @@ To use this start the container with:
 
 Checks for successful setup of the CGI and FCGI test.pl scripts:
 
-    curl 127.0.0.1/hello
-    time for i in {1..10}; do curl 127.0.0.1/cgi-bin/test.pl; done  #CGI
-    time for i in {1..10}; do curl 127.0.0.1/fcgi-bin/test.pl; done #FCGI
-    for i in {1..10}; do curl 127.0.0.1/hello; done #FCGI alias to test.pl
-    for i in {1..10}; do curl 127.0.0.1/bye; done   #FCGI another alias
+    cat /web/fcgi-bin/test.pl                   #view hello app / test app
+    cat /web/config/conf.d/fcgid.conf           #view routes
+
+    curl 127.0.0.1/hello                        # 1
+    curl 127.0.0.1/hello                        # 2
+    curl 127.0.0.1/hello                        # 3
+    time for i in {1..10}; do curl -s 127.0.0.1/cgi-bin/test.pl; done  #CGI  1 1 1 1 1 1 1 1 1 1
+    time for i in {1..10}; do curl -s 127.0.0.1/fcgi-bin/test.pl; done #FCGI 1 2 3 4 5 6 7 7 8 10
+
+Increase 10 to 1000 and you'll see that FCGI is faster than CGI.
+Especially when you have initialization (like connecting to a
+database) which will not be repeated (as much) for FCGI as for CGI
+which inits every request..
