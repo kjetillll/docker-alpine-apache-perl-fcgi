@@ -46,15 +46,15 @@ The images exposes a volume at /web. The structure is
 
 To use this start the container with:
 
-   mkdir -p /path/to/web
-   docker run -d --name fcgi -p 80:80 -p 443:443 -v /path/to/web:/web kjetils/alpine-apache-perl-fcgi
+    mkdir -p /path/to/web
+    docker run -d --name fcgi -p 80:80 -p 443:443 -v /path/to/web:/web kjetils/alpine-apache-perl-fcgi
 
 #### Successsful setup
 
 Checks for successful setup of the CGI and FCGI test.pl scripts:
 
-       curl 127.0.0.1/hello
-       time for i in {1..10}; do curl 127.0.0.1/cgi-bin/test.pl; done  #CGI
-       time for i in {1..10}; do curl 127.0.0.1/fcgi-bin/test.pl; done #FCGI
-       for i in {1..10}; do curl 127.0.0.1/hello; done #FCGI alias to test.pl
-       for i in {1..10}; do curl 127.0.0.1/bye; done   #FCGI another alias
+    curl 127.0.0.1/hello
+    time for i in {1..10}; do curl 127.0.0.1/cgi-bin/test.pl; done  #CGI
+    time for i in {1..10}; do curl 127.0.0.1/fcgi-bin/test.pl; done #FCGI
+    for i in {1..10}; do curl 127.0.0.1/hello; done #FCGI alias to test.pl
+    for i in {1..10}; do curl 127.0.0.1/bye; done   #FCGI another alias
