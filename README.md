@@ -49,9 +49,10 @@ The images exposes a volume at /web. The structure is
 | /web/logs | apache log directory with access.log and error.log |
 | /web/internal | internal pages, error pages etc
 
-To use this start the container with:
+Start the container:
 
     mkdir -p /path/to/web
+
     docker run -d --name fcgi -p 80:80 -p 443:443 -v /path/to/web:/web kjetils/alpine-apache-perl-fcgi
 
 #### Successsful setup
@@ -69,5 +70,4 @@ Checks for successful setup of the CGI and FCGI test.pl scripts:
 
 Increase 10 to 1000 and you'll see that FCGI is faster than CGI.
 Especially when you have initialization (like connecting to a
-database) which will not be repeated (as much) for FCGI as for CGI
-which inits every request..
+database) which will not be repeated much for FCGI as with CGI.
